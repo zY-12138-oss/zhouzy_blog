@@ -1,0 +1,60 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/zhouzy_blog?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 50
+      idle-timeout: 30000
+      pool-name: BlogHikariCP
+      connection-timeout: 30000
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: 0
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+          max-wait: -1ms
+      timeout: 6000ms
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+
+logging:
+  level:
+    root: warn
+    com.zhouzy.blog: info
+  file:
+    name: /var/log/blog-backend/blog-backend.log
+
+blog:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-must-be-32-bytes}
+    access-token-expire: 7200
+    refresh-token-expire: 604800
+
+  upload:
+    path: ${UPLOAD_PATH:/data/blog-uploads}
+    url-prefix: ${UPLOAD_URL_PREFIX:https://your-domain.com/uploads}
+    allowed-types: jpg,jpeg,png,gif,webp,svg
+    max-size: 5242880
+
+  ai:
+    api-url: ${AI_API_URL:https://api.openai.com/v1}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:gpt-4o}
+    max-tokens: 2048
+
+  cors:
+    allowed-origins:
+      - ${FRONTEND_URL:https://your-blog.com}

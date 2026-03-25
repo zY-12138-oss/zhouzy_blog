@@ -1,0 +1,65 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zhouzy_blog?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: zzy1667973966
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: BlogHikariCP
+      connection-timeout: 30000
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+      timeout: 6000ms
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+
+logging:
+  level:
+    com.zhouzy.blog: debug
+    com.baomidou: debug
+  file:
+    name: logs/blog-backend.log
+
+# JWT
+blog:
+  jwt:
+    secret: zhouzy-blog-secret-key-2026-must-be-at-least-32-bytes-long!
+    access-token-expire: 7200        # 2 hours (seconds)
+    refresh-token-expire: 604800     # 7 days (seconds)
+
+  # File upload
+  upload:
+    path: D:/blog-uploads
+    url-prefix: http://localhost:8080/uploads
+    allowed-types: jpg,jpeg,png,gif,webp,svg
+    max-size: 5242880  # 5MB
+
+  # AI
+  ai:
+    api-url: https://api.openai.com/v1
+    api-key: sk-your-api-key-here
+    model: gpt-4o
+    max-tokens: 2048
+
+  # CORS
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:3001
